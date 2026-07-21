@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kate Kucherova — Skills Map</title>
+<style>
+  :root{
+    --navy:#2B2E4A;
+    --navy-soft:#3d4166;
+    --band:#F2F3F7;
+    --canvas:#FAFAFA;
+    --ink:#26283a;
+    --muted:#65697e;
+    --line:#dfe1ea;
+    --excel:#1e7245;
+    --excel-bg:#e7f3ec;
+    --pbi:#a97a00;
+    --pbi-bg:#fbf2dc;
+    --case:#2B2E4A;
+    --case-bg:#e9eaf1;
+    --fav:#2E9E5B;
+    --unfav:#C0392B;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0; background:var(--canvas); color:var(--ink);
+    font-family:"Segoe UI", "Segoe UI Web", system-ui, -apple-system, Roboto, Arial, sans-serif;
+    line-height:1.55;
+  }
+  code, .mono{ font-family:"Cascadia Code","Consolas","SFMono-Regular",Menlo,monospace; }
+
+  /* ---- nav ---- */
+  nav{
+    position:sticky; top:0; z-index:50; background:var(--navy); color:#fff;
+    display:flex; align-items:center; gap:2px; padding:0 24px; height:52px;
+    overflow-x:auto; white-space:nowrap; box-shadow:0 1px 0 rgba(0,0,0,.15);
+  }
+  nav .brand{ font-weight:600; margin-right:24px; letter-spacing:.2px; }
+  nav a{
+    color:#c9cbe0; text-decoration:none; font-size:14px; padding:8px 12px;
+    border-radius:4px; transition:color .15s, background .15s;
+  }
+  nav a:hover, nav a:focus-visible{ color:#fff; background:rgba(255,255,255,.08); outline:none; }
+
+  /* ---- hero ---- */
+  header.hero{ max-width:980px; margin:0 auto; padding:56px 24px 20px; }
+  .formula-bar{
+    display:flex; align-items:center; gap:10px; font-family:"Cascadia Code","Consolas",monospace;
+    font-size:13px; color:var(--muted); border:1px solid var(--line); background:#fff;
+    border-radius:6px; padding:8px 14px; margin-bottom:28px; width:fit-content;
+  }
+  .formula-bar .fx{ color:var(--navy); font-weight:700; }
+  header.hero h1{ font-size:34px; margin:0 0 10px; color:var(--navy); letter-spacing:-.2px; }
+  header.hero .sub{ color:var(--muted); font-size:16px; margin:0 0 32px; max-width:620px; }
+
+  .stat-strip{
+    display:grid; grid-template-columns:repeat(4,1fr); border-top:1px solid var(--line);
+    border-bottom:1px solid var(--line);
+  }
+  .stat-strip div{ padding:18px 4px 18px 0; border-right:1px solid var(--line); }
+  .stat-strip div:last-child{ border-right:none; }
+  .stat-strip .num{ font-family:"Cascadia Code","Consolas",monospace; font-size:26px; font-weight:700; color:var(--navy); }
+  .stat-strip .lbl{ font-size:12.5px; color:var(--muted); margin-top:2px; }
+
+  /* ---- sections ---- */
+  main{ max-width:980px; margin:0 auto; padding:0 24px 80px; }
+  section{ margin-top:56px; scroll-margin-top:64px; }
+  .section-bar{
+    background:var(--navy); color:#fff; padding:10px 16px; border-radius:6px 6px 0 0;
+    font-size:15px; font-weight:600; letter-spacing:.2px;
+  }
+  .section-body{ border:1px solid var(--line); border-top:none; border-radius:0 0 6px 6px; padding:20px; background:#fff; }
+  .headline-skill{
+    font-size:14px; color:var(--ink); background:var(--band); border-left:3px solid var(--navy);
+    padding:12px 16px; border-radius:0 4px 4px 0; margin-bottom:20px;
+  }
+  .headline-skill b{ color:var(--navy); }
+
+  /* skill row */
+  .skill-row{ display:grid; grid-template-columns:1fr; gap:6px; padding:14px 0; border-bottom:1px solid var(--line); }
+  .skill-row:last-child{ border-bottom:none; }
+  .skill-row .top{ display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
+  .skill-row .name{ font-weight:600; color:var(--navy); font-size:15px; }
+  .tag{
+    font-size:11.5px; font-weight:600; padding:3px 9px; border-radius:100px;
+    white-space:nowrap;
+  }
+  .tag.excel{ background:var(--excel-bg); color:var(--excel); }
+  .tag.pbi{ background:var(--pbi-bg); color:var(--pbi); }
+  .tag.case{ background:var(--case-bg); color:var(--case); }
+  .skill-row .desc{ color:var(--muted); font-size:14px; max-width:720px; }
+
+  /* technique blocks (DAX grouped) */
+  .technique{ padding:14px 0; border-bottom:1px solid var(--line); }
+  .technique:last-child{ border-bottom:none; }
+  .technique .name{ font-weight:600; color:var(--navy); font-size:15px; }
+  .technique .funcs{ font-family:"Cascadia Code","Consolas",monospace; font-size:12px; color:var(--pbi); margin-left:8px; }
+  .technique .desc{ color:var(--muted); font-size:14px; margin-top:4px; max-width:760px; }
+
+  /* full inventory (details) */
+  details{ margin-top:20px; border-top:1px dashed var(--line); padding-top:14px; }
+  summary{
+    cursor:pointer; font-size:13.5px; font-weight:600; color:var(--navy);
+    list-style:none; display:flex; align-items:center; gap:6px; user-select:none;
+  }
+  summary::-webkit-details-marker{ display:none; }
+  summary::before{ content:"▸"; font-size:11px; transition:transform .15s; color:var(--muted); }
+  details[open] summary::before{ transform:rotate(90deg); }
+  table{ width:100%; border-collapse:collapse; margin-top:14px; font-size:13px; }
+  th{ text-align:left; background:var(--band); color:var(--navy); font-size:11.5px; text-transform:uppercase; letter-spacing:.03em; padding:8px 10px; }
+  td{ padding:9px 10px; vertical-align:top; border-bottom:1px solid var(--line); }
+  tr:nth-child(even) td{ background:var(--band); }
+  td.formula{ font-family:"Cascadia Code","Consolas",monospace; font-size:12px; color:var(--ink); white-space:pre-wrap; }
+  td.fnname{ font-family:"Cascadia Code","Consolas",monospace; font-weight:700; color:var(--navy); }
+  td.count{ text-align:center; }
+  td.technique-cell{ color:var(--muted); font-style:italic; font-size:12px; white-space:nowrap; }
+
+  .placeholder{ color:var(--muted); font-style:italic; font-size:14px; padding:8px 0; }
+
+  footer{ max-width:980px; margin:0 auto; padding:32px 24px 60px; border-top:1px solid var(--line); color:var(--muted); font-size:13px; }
+  footer .name{ color:var(--navy); font-weight:600; }
+
+  @media (max-width:640px){
+    .stat-strip{ grid-template-columns:repeat(2,1fr); }
+    .stat-strip div:nth-child(2){ border-right:none; }
+    header.hero h1{ font-size:27px; }
+  }
+  @media (prefers-reduced-motion:reduce){
+    html{ scroll-behavior:auto; }
+    *{ transition:none !important; }
+  }
+</style>
+</head>
+<body>
+
+<nav aria-label="Section navigation">
+  <span class="brand">Kate Kucherova</span>
+  <a href="#fpa">FP&amp;A</a>
+  <a href="#accounting">Accounting</a>
+  <a href="#excel">Excel</a>
+  <a href="#dax">Power BI / DAX</a>
+  <a href="#sql">SQL</a>
+</nav>
+
+<header class="hero">
+  <div class="formula-bar"><span class="fx">fx</span> =SKILLS.MAP("Kate Kucherova", evidence:TRUE)</div>
+  <h1>Every skill here traces to a source you can open.</h1>
+  <p class="sub">No line below is asserted without a specific tab, page, or measure behind it. Source project: Claire Studio FP&amp;A Model — a 16-tab Excel workbook and 5-page Power BI dashboard built from 847 real cash transactions.</p>
+
+  <div class="stat-strip">
+    <div><div class="num">16</div><div class="lbl">Excel tabs</div></div>
+    <div><div class="num">35</div><div class="lbl">DAX measures</div></div>
+    <div><div class="num">806</div><div class="lbl">INDEX/MATCH lookups</div></div>
+    <div><div class="num">100%</div><div class="lbl">error-guarded</div></div>
+  </div>
+</header>
+
+<main>
+
+  <!-- FP&A -->
+  <section id="fpa">
+    <div class="section-bar">Financial Analysis &amp; FP&amp;A</div>
+    <div class="section-body">
+      <div class="skill-row">
+        <div class="top"><span class="name">Variance Analysis</span><span class="tag excel">Excel · Budget_vs_Actual</span><span class="tag case">Case Study · Insight 4</span></div>
+        <div class="desc">Sign-aware favorable/unfavorable logic across 15 revenue and expense lines, with written F/U commentary.</div>
+      </div>
+      <div class="skill-row">
+        <div class="top"><span class="name">Break-Even / Expansion Analysis</span><span class="tag excel">Excel · Second_Hall_BreakEven</span><span class="tag pbi">Power BI · Break-Even page</span></div>
+        <div class="desc">Built a recurring break-even model for a real leasing decision — incremental fixed cost ÷ contribution margin — and tracked coverage over three time windows.</div>
+      </div>
+      <div class="skill-row">
+        <div class="top"><span class="name">Unit Economics</span><span class="tag excel">Excel · Cost_Per_Class_Model</span></div>
+        <div class="desc">Cost per class, revenue per student, and contribution margin by program using peak-month data.</div>
+      </div>
+      <div class="skill-row">
+        <div class="top"><span class="name">Budget-to-Actual Reconciliation</span><span class="tag excel">Excel · Budget_vs_Actual, Management_Dashboard</span></div>
+        <div class="desc">Constructed a full annual operating budget from run-rate assumptions and reconciled monthly against actuals.</div>
+      </div>
+      <div class="skill-row">
+        <div class="top"><span class="name">Revenue / Program Mix Analysis</span><span class="tag pbi">Power BI · Program Mix page</span></div>
+        <div class="desc">Subscription vs. one-time revenue split by program, used to inform a real program-discontinuation decision.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Accounting -->
+  <section id="accounting">
+    <div class="section-bar">Accounting</div>
+    <div class="section-body">
+      <div class="skill-row">
+        <div class="top"><span class="name">Revenue Recognition</span><span class="tag excel">Excel · Accounting_Treatment</span></div>
+        <div class="desc">Applied consistent recognition timing across subscription and one-time revenue types.</div>
+      </div>
+      <div class="skill-row">
+        <div class="top"><span class="name">Fixed Asset Depreciation</span><span class="tag excel">Excel · Fixed_Asset_Depreciation</span></div>
+        <div class="desc">Straight-line depreciation across three asset classes with different useful lives (3/5/7-year).</div>
+      </div>
+      <div class="skill-row">
+        <div class="top"><span class="name">Journal Entries</span><span class="tag excel">Excel · Journal_Entries</span></div>
+        <div class="desc">12 double-entry journal entries with a live debit/credit balance check.</div>
+      </div>
+      <div class="skill-row">
+        <div class="top"><span class="name">Inventory &amp; COGS</span><span class="tag excel">Excel · Inventory_Rollforward</span></div>
+        <div class="desc">Weighted-average costing for resale inventory, tied to Cost of Goods Sold.</div>
+      </div>
+      <div class="skill-row">
+        <div class="top"><span class="name">Owner Equity Treatment</span><span class="tag excel">Excel · Model_Data, Business_Overview</span></div>
+        <div class="desc">Distinguished fixed owner salary (payroll expense) from profit distributions (equity), per documented policy.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Excel -->
+  <section id="excel">
+    <div class="section-bar">Excel Formulas &amp; Modeling</div>
+    <div class="section-body">
+      <div class="headline-skill"><b>Headline skill — error-guarded lookup architecture.</b> Every cross-tab lookup (806 uses of INDEX/MATCH) is wrapped in IFERROR (782 uses): a missing month or renamed category fails silently to blank or zero, never a visible #N/A in a reviewer's screenshot.</div>
+
+      <details>
+        <summary>Show full function inventory (8 functions)</summary>
+        <table>
+          <thead><tr><th>Function</th><th>Uses</th><th>Live example</th></tr></thead>
+          <tbody>
+            <tr><td class="fnname">INDEX / MATCH</td><td class="count">806</td><td class="formula">Management_Dashboard!B14
+=INDEX('Monthly_P&amp;L'!$C$26:$AG$26,1,MATCH($A14,'Monthly_P&amp;L'!$C$3:$AG$3,0))</td></tr>
+            <tr><td class="fnname">IFERROR</td><td class="count">782</td><td class="formula">Monthly_P&amp;L!C7
+=IFERROR(INDEX(Model_Data!$A$4:$AG$34,MATCH(...),MATCH(...)),0)</td></tr>
+            <tr><td class="fnname">SUMIFS</td><td class="count">183</td><td class="formula">Annual_KPIs!B7
+=SUMIFS('Monthly_P&amp;L'!$C$7:$AG$7,'Monthly_P&amp;L'!$C$4:$AG$4,B$4)</td></tr>
+            <tr><td class="fnname">SUM</td><td class="count">349</td><td class="formula">Business_Overview!C33
+=SUM(C28:C32)</td></tr>
+            <tr><td class="fnname">IF</td><td class="count">105</td><td class="formula">Management_Dashboard!D14
+=IF(B14&lt;&gt;0,C14/B14,"")</td></tr>
+            <tr><td class="fnname">AVERAGE</td><td class="count">7</td><td class="formula">Second_Hall_BreakEven!B13
+=AVERAGE(Model_Data!S12:S15)</td></tr>
+            <tr><td class="fnname">COUNTIF</td><td class="count">4</td><td class="formula">Annual_KPIs!B6
+=COUNTIF('Monthly_P&amp;L'!$C$4:$AG$4,B$4)</td></tr>
+            <tr><td class="fnname">MAX / MIN</td><td class="count">5</td><td class="formula">Fixed_Asset_Depreciation!B11
+=MAX(0,SUM($C$5:$C$6)-($E$5+$E$6)*2)</td></tr>
+          </tbody>
+        </table>
+      </details>
+    </div>
+  </section>
+
+  <!-- DAX -->
+  <section id="dax">
+    <div class="section-bar">Power BI / DAX</div>
+    <div class="section-body">
+      <div class="technique">
+        <span class="name">Safe Division &amp; Null-Guarded Aggregation</span><span class="funcs">DIVIDE · ISBLANK · COALESCE</span>
+        <div class="desc">Every ratio (NOI Margin %, Variance %) uses DIVIDE with an implicit zero-guard, and every budget comparison checks ISBLANK before subtracting — no #DIV/0! or blank-row errors reach the report.</div>
+      </div>
+      <div class="technique">
+        <span class="name">Filter Context Control</span><span class="funcs">CALCULATE · REMOVEFILTERS · ALLEXCEPT · SELECTEDVALUE · VALUES</span>
+        <div class="desc">Seasonality Index recalculates each month's revenue against its own year's average using ALLEXCEPT; Payment Mix Insight uses REMOVEFILTERS to compare one program against the whole table regardless of what's currently sliced.</div>
+      </div>
+      <div class="technique">
+        <span class="name">Cross-Table Lookups</span><span class="funcs">LOOKUPVALUE</span>
+        <div class="desc">Break-Even Target, Incremental Fixed Cost, and Contribution Margin all pull from a separate assumptions table by name, rather than hardcoding a value into the visual layer.</div>
+      </div>
+      <div class="technique">
+        <span class="name">Dynamic Narrative Generation</span><span class="funcs">VAR/RETURN · FORMAT · SWITCH</span>
+        <div class="desc">Payment Mix Insight assembles a full written sentence conditionally from live data ("Karate had 12% of transactions classified as one-time…") — the report writes its own commentary as the data changes, rather than showing a static caption.</div>
+      </div>
+
+      <details>
+        <summary>Show full measure inventory (35 measures)</summary>
+        <table>
+          <thead><tr><th>Measure</th><th>Technique</th><th>Page</th><th>DAX</th></tr></thead>
+          <tbody>
+            <tr><td class="fnname">NOI Margin %</td><td class="technique-cell">Safe division</td><td>Overview</td><td class="formula">DIVIDE([Total NOI], [Total Revenue])</td></tr>
+            <tr><td class="fnname">Total Revenue</td><td class="technique-cell">Aggregation</td><td>Overview</td><td class="formula">SUM(SourceMonthlyData[Total Revenue])</td></tr>
+            <tr><td class="fnname">Total NOI</td><td class="technique-cell">Aggregation</td><td>Overview</td><td class="formula">SUM(SourceMonthlyData[Net Operating Cash Flow])</td></tr>
+            <tr><td class="fnname">Cumulative Cash</td><td class="technique-cell">Aggregation</td><td>Overview</td><td class="formula">SUM(SourceMonthlyData[Net Cash Movement Including Owners])</td></tr>
+            <tr><td class="fnname">Total Actual</td><td class="technique-cell">Aggregation</td><td>Budget vs. Actual</td><td class="formula">SUM(ActualsLong[ActualAmount])</td></tr>
+            <tr><td class="fnname">Total Budget</td><td class="technique-cell">Aggregation</td><td>Budget vs. Actual</td><td class="formula">SUM(BudgetAssumptions[BudgetAmount])</td></tr>
+            <tr><td class="fnname">Variance $</td><td class="technique-cell">Null-guarded logic</td><td>Budget vs. Actual</td><td class="formula">IF(ISBLANK([Total Budget]),BLANK(),[Total Actual]-[Total Budget])</td></tr>
+            <tr><td class="fnname">Variance %</td><td class="technique-cell">Safe division</td><td>Budget vs. Actual</td><td class="formula">DIVIDE([Variance $], [Total Budget])</td></tr>
+            <tr><td class="fnname">Variance Type</td><td class="technique-cell">Context-aware conditional</td><td>Budget vs. Actual</td><td class="formula">IF(SELECTEDVALUE(CategoryDimensions[CategoryType])="Revenue",[Variance $],-[Variance $])</td></tr>
+            <tr><td class="fnname">Budget Status</td><td class="technique-cell">Null-guarded logic</td><td>Budget vs. Actual</td><td class="formula">IF(ISBLANK([Total Budget]),"Unbudgeted","Budgeted")</td></tr>
+            <tr><td class="fnname">Unbudgeted Actual</td><td class="technique-cell">Null-guarded logic</td><td>Budget vs. Actual</td><td class="formula">IF(ISBLANK([Total Budget]),[Total Actual],BLANK())</td></tr>
+            <tr><td class="fnname">Status</td><td class="technique-cell">Multi-branch VAR logic</td><td>Budget vs. Actual</td><td class="formula">VAR ActualValue = [Total Actual]
+VAR BudgetValue = [Total Budget]
+RETURN IF(ISBLANK(ActualValue) &amp;&amp; ISBLANK(BudgetValue),BLANK(),
+  IF(ISBLANK(BudgetValue),"No Budget",
+    IF([Variance Type]&gt;=0,"Favorable","Unfavorable")))</td></tr>
+            <tr><td class="fnname">Total Revenue (Financials)</td><td class="technique-cell">Filtered aggregation</td><td>Profitability</td><td class="formula">CALCULATE(SUM(FinancialsLong[Amount]), FinancialsLong[LineType]="Revenue")</td></tr>
+            <tr><td class="fnname">Total Expenses (Financials)</td><td class="technique-cell">Filtered aggregation</td><td>Profitability</td><td class="formula">CALCULATE(SUM(FinancialsLong[Amount]), FinancialsLong[LineType]="Expense")</td></tr>
+            <tr><td class="fnname">Total NOI (Financials)</td><td class="technique-cell">Measure composition</td><td>Profitability</td><td class="formula">[Total Revenue (Financials)] - [Total Expenses (Financials)]</td></tr>
+            <tr><td class="fnname">NOI Margin % (Financials)</td><td class="technique-cell">Safe division</td><td>Profitability</td><td class="formula">DIVIDE([Total NOI (Financials)], [Total Revenue (Financials)])</td></tr>
+            <tr><td class="fnname">Rent Expense</td><td class="technique-cell">Filtered aggregation</td><td>Profitability</td><td class="formula">CALCULATE(SUM(FinancialsLong[Amount]), FinancialsLong[LineItem]="Rent")</td></tr>
+            <tr><td class="fnname">Other Expenses</td><td class="technique-cell">Measure composition</td><td>Profitability</td><td class="formula">[Total Expenses (Financials)] - [Rent Expense]</td></tr>
+            <tr><td class="fnname">Rent % of Total Expenses</td><td class="technique-cell">Safe division</td><td>Profitability</td><td class="formula">DIVIDE([Rent Expense], [Total Expenses (Financials)])</td></tr>
+            <tr><td class="fnname">Break-Even Target</td><td class="technique-cell">Cross-table lookup</td><td>Break-Even Hall 2</td><td class="formula">LOOKUPVALUE(BreakEvenAssumptions[Value],BreakEvenAssumptions[Metric],"Revenue Needed to Break Even")</td></tr>
+            <tr><td class="fnname">Incremental Fixed Cost</td><td class="technique-cell">Cross-table lookup</td><td>Break-Even Hall 2</td><td class="formula">LOOKUPVALUE(BreakEvenAssumptions[Value],BreakEvenAssumptions[Metric],"Incremental Fixed Cost")</td></tr>
+            <tr><td class="fnname">Contribution Margin</td><td class="technique-cell">Cross-table lookup</td><td>Break-Even Hall 2</td><td class="formula">LOOKUPVALUE(BreakEvenAssumptions[Value],BreakEvenAssumptions[Metric],"Contribution Margin Assumption")</td></tr>
+            <tr><td class="fnname">Status Color</td><td class="technique-cell">Multi-branch mapping</td><td>Budget vs. Actual</td><td class="formula">SWITCH([Status],"Favorable","#2E9E5B","Unfavorable","#C0392B","No Budget","#B8BCC8","#000000")</td></tr>
+            <tr><td class="fnname">Month Revenue</td><td class="technique-cell">Filtered aggregation</td><td>Overview</td><td class="formula">CALCULATE(SUM(FinancialsLong[Amount]),FinancialsLong[LineType]="Revenue")</td></tr>
+            <tr><td class="fnname">Seasonality Index</td><td class="technique-cell">Filter context control</td><td>Overview</td><td class="formula">VAR CurrentYear = SELECTEDVALUE(DateTable[Year])
+VAR YearAvg = CALCULATE(AVERAGEX(VALUES(DateTable[MonthName]),[Month Revenue]),
+  ALLEXCEPT(DateTable,DateTable[Year]),DateTable[Year]=CurrentYear)
+RETURN DIVIDE([Month Revenue], YearAvg) * 100</td></tr>
+            <tr><td class="fnname">Subscription Revenue</td><td class="technique-cell">Null-guarded logic</td><td>Program Mix</td><td class="formula">VAR Result = CALCULATE(SUM(ProgramPaymentMix[Revenue ($)]),ProgramPaymentMix[Payment Type]="Subscription")
+RETURN COALESCE(Result, 0)</td></tr>
+            <tr><td class="fnname">One-time Revenue</td><td class="technique-cell">Null-guarded logic</td><td>Program Mix</td><td class="formula">VAR Result = CALCULATE(SUM(ProgramPaymentMix[Revenue ($)]),ProgramPaymentMix[Payment Type]="One-time")
+RETURN COALESCE(Result, 0)</td></tr>
+            <tr><td class="fnname">One-time Txn Share</td><td class="technique-cell">Null-guarded logic</td><td>Program Mix</td><td class="formula">VAR OneTimeCount = COALESCE(CALCULATE(COUNTROWS(ProgramPaymentMix),ProgramPaymentMix[Payment Type]="One-time"),0)
+VAR TotalCount = COUNTROWS(ProgramPaymentMix)
+RETURN DIVIDE(OneTimeCount, TotalCount, 0)</td></tr>
+            <tr><td class="fnname">Payment Mix Insight</td><td class="technique-cell">Dynamic narrative generation</td><td>Program Mix</td><td class="formula">VAR KarateShare = CALCULATE([One-time Txn Share],REMOVEFILTERS(ProgramPaymentMix[Program]),ProgramPaymentMix[Program]="Karate")
+... FORMAT(...,"0%") &amp; " of transactions..." (full text auto-generated from live data)</td></tr>
+          </tbody>
+        </table>
+      </details>
+    </div>
+  </section>
+
+  <!-- SQL -->
+  <section id="sql">
+    <div class="section-bar">SQL</div>
+    <div class="section-body">
+      <div class="placeholder">Reserved for a future project — will follow the same evidence-table format once source material is available.</div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div><span class="name">Kate Kucherova</span> · CMA Candidate · kate.kucherova@email.com</div>
+  <div>Portfolio 2026 · Skills Map v1</div>
+</footer>
+
+</body>
+</html>
