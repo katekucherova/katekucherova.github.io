@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Siemens Mobility Financial Analysis | Kate Kucherova</title>
+<style>
+  :root{
+    --navy:#2B2E4A;
+    --band:#F2F3F7;
+    --canvas:#FAFAFA;
+    --ink:#26283a;
+    --muted:#65697e;
+    --line:#dfe1ea;
+    --fav:#2E9E5B;
+    --unfav:#C0392B;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0; background:var(--canvas); color:var(--ink);
+    font-family:"Segoe UI", "Segoe UI Web", system-ui, -apple-system, Roboto, Arial, sans-serif;
+    line-height:1.6;
+  }
+  code, .mono{ font-family:"Cascadia Code","Consolas","SFMono-Regular",Menlo,monospace; }
+
+  /* ---- nav ---- */
+  nav{
+    position:sticky; top:0; z-index:50; background:var(--navy); color:#fff;
+    display:flex; align-items:center; gap:2px; padding:0 24px; height:52px;
+    overflow-x:auto; white-space:nowrap; box-shadow:0 1px 0 rgba(0,0,0,.15);
+  }
+  nav .brand{ margin-right:24px; }
+  nav .brand span{ font-weight:600; letter-spacing:.2px; color:#fff; }
+  nav .links{ display:flex; align-items:center; gap:2px; }
+  nav a{
+    color:#c9cbe0; text-decoration:none; font-size:14px; padding:8px 12px;
+    border-radius:4px; transition:color .15s, background .15s;
+  }
+  nav a:hover, nav a:focus-visible{ color:#fff; background:rgba(255,255,255,.08); outline:none; }
+  nav a.current{ color:#fff; background:rgba(255,255,255,.12); }
+
+  /* ---- cover ---- */
+  .cover{
+    background:linear-gradient(180deg, #fff 0%, var(--band) 100%);
+    border-bottom:1px solid var(--line);
+    padding:44px 24px 36px;
+    text-align:center;
+  }
+  .cover .role{ color:var(--navy); font-size:13px; font-weight:600; letter-spacing:.06em; text-transform:uppercase; margin-bottom:10px; }
+  .cover h1{ font-size:30px; color:var(--navy); margin:0 auto 12px; max-width:680px; letter-spacing:-.2px; }
+  .cover .sub{ color:var(--muted); font-size:15.5px; max-width:640px; margin:0 auto; }
+  .cover .badges{ margin-top:22px; display:flex; gap:8px; justify-content:center; flex-wrap:wrap; }
+  .cover .badge{ font-size:11.5px; font-weight:600; padding:4px 11px; border-radius:100px; background:#fff; border:1px solid var(--line); color:var(--muted); }
+  .cover .disclosure{ margin-top:18px; font-size:12.5px; color:var(--muted); font-style:italic; }
+
+  /* ---- sections ---- */
+  main{ max-width:900px; margin:0 auto; padding:28px 24px 80px; }
+  section{ margin-top:40px; scroll-margin-top:64px; }
+  .section-label{
+    font-size:12.5px; font-weight:700; text-transform:uppercase; letter-spacing:.06em;
+    color:var(--muted); margin-bottom:14px;
+  }
+  p{ color:var(--ink); font-size:15px; }
+  .lede{ color:var(--muted); font-size:15px; }
+
+  /* stat strip */
+  .stat-grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:var(--line); border:1px solid var(--line); border-radius:8px; overflow:hidden; margin-top:8px; }
+  .stat-grid div{ background:#fff; padding:18px 14px; }
+  .stat-grid .num{ font-family:"Cascadia Code","Consolas",monospace; font-size:19px; font-weight:700; color:var(--navy); }
+  .stat-grid .lbl{ font-size:11.5px; color:var(--muted); margin-top:4px; }
+
+  /* insight cards */
+  .insight{ border:1px solid var(--line); background:#fff; border-radius:8px; padding:20px 22px; margin-bottom:14px; }
+  .insight h3{ margin:0 0 8px; color:var(--navy); font-size:15.5px; }
+  .insight p{ margin:0; color:var(--muted); font-size:14.5px; }
+
+  /* bridge table */
+  table.bridge{ width:100%; border-collapse:collapse; margin-top:8px; background:#fff; border:1px solid var(--line); border-radius:8px; overflow:hidden; }
+  table.bridge td{ padding:10px 16px; border-bottom:1px solid var(--line); font-size:14px; }
+  table.bridge tr:last-child td{ border-bottom:none; }
+  table.bridge td:last-child{ text-align:right; font-family:"Cascadia Code","Consolas",monospace; font-weight:600; color:var(--navy); }
+  table.bridge tr.total td{ font-weight:700; background:var(--band); }
+
+  /* cost table */
+  table.cost{ width:100%; border-collapse:collapse; margin-top:8px; font-size:13.5px; }
+  table.cost th{ text-align:left; background:var(--band); color:var(--navy); font-size:11.5px; text-transform:uppercase; letter-spacing:.03em; padding:8px 10px; }
+  table.cost td{ padding:9px 10px; border-bottom:1px solid var(--line); }
+  table.cost td.num{ font-family:"Cascadia Code","Consolas",monospace; text-align:right; }
+  table.cost tr:last-child td{ font-weight:700; background:var(--band); }
+  .status-escalate{ color:var(--unfav); font-weight:600; }
+  .status-monitor{ color:#a97a00; font-weight:600; }
+  .status-ontrack{ color:var(--fav); font-weight:600; }
+
+  /* dashboard screenshots */
+  .dash-shot{ margin-bottom:36px; }
+  .dash-shot .dash-label{ font-size:13px; font-weight:700; color:var(--navy); margin-bottom:8px; }
+  .dash-shot img{ width:100%; height:auto; display:block; border:1px solid var(--line); border-radius:6px; box-shadow:0 2px 10px rgba(43,46,74,.06); }
+  .insight:target, .dash-shot:target{ outline:2px solid var(--navy); outline-offset:4px; border-radius:8px; }
+
+  /* downloads */
+  .downloads{ display:flex; gap:12px; flex-wrap:wrap; margin-top:8px; }
+  .dl-btn{
+    display:inline-flex; align-items:center; gap:8px; text-decoration:none;
+    background:var(--navy); color:#fff; font-size:14px; font-weight:600;
+    padding:12px 18px; border-radius:6px; transition:background .15s;
+  }
+  .dl-btn:hover{ background:#3d4166; }
+  .dl-btn.secondary{ background:#fff; color:var(--navy); border:1px solid var(--line); }
+  .dl-btn.secondary:hover{ border-color:var(--navy); }
+  .dl-note{ color:var(--muted); font-size:12.5px; margin-top:10px; }
+
+  footer{ max-width:900px; margin:0 auto; padding:32px 24px 60px; border-top:1px solid var(--line); color:var(--muted); font-size:13px; }
+  footer a{ color:var(--navy); }
+  footer .name{ color:var(--navy); font-weight:600; }
+
+  @media (max-width:640px){
+    .stat-grid{ grid-template-columns:1fr 1fr; }
+    .cover h1{ font-size:23px; }
+  }
+</style>
+</head>
+<body>
+
+<nav aria-label="Site navigation">
+  <div class="brand"><span>Kate Kucherova</span></div>
+  <div class="links">
+    <a href="/index.html">Home</a>
+    <a href="/claire-studio.html">Claire Studio</a>
+    <a href="/siemens-mobility.html" class="current">Siemens Mobility</a>
+    <a href="/Claire_Skills_Map.html">Skills Map</a>
+    <a href="/index.html#contact">Contact</a>
+  </div>
+</nav>
+
+<div class="cover">
+  <div class="role">Independent Financial Analysis Project</div>
+  <h1>Siemens Mobility — forecasting and profit-driver analysis from public financial data.</h1>
+  <p class="sub">A 12-month EAC forecast, a profit variance bridge, and a Power BI dashboard, built entirely from Siemens Mobility's public FY2025 Annual Report.</p>
+  <div class="badges">
+    <span class="badge">Public FY2025 data</span>
+    <span class="badge">3-page Power BI dashboard</span>
+    <span class="badge">FY2026 forecast model</span>
+  </div>
+  <div class="disclosure">Independent analysis based on public Siemens Mobility FY2025 Annual Report data. Not affiliated with or endorsed by Siemens.</div>
+</div>
+
+<main>
+
+  <section id="about">
+    <div class="section-label">About This Project</div>
+    <p>This is an independent portfolio project, not employer work product. I built a financial analysis model using Siemens Mobility's public FY2025 results — a profit variance bridge explaining what drove the year-over-year change in EBITA, a cost-center budget-vs-actual tracker, and a monthly FY2026 revenue and margin forecast — then visualized all of it in a 3-page Power BI dashboard.</p>
+  </section>
+
+  <section id="results">
+    <div class="section-label">FY2026 Forecast Headlines</div>
+    <div class="stat-grid">
+      <div><div class="num">€12,000M</div><div class="lbl">Revenue Target</div></div>
+      <div><div class="num">2.7%</div><div class="lbl">Margin Gap to Close</div></div>
+      <div><div class="num">10.2%</div><div class="lbl">Avg. Forecast Margin</div></div>
+      <div><div class="num">€1,223M</div><div class="lbl">Profit Forecast</div></div>
+    </div>
+  </section>
+
+  <section id="insights">
+    <div class="section-label">Key Insights</div>
+
+    <div class="insight" id="insight-forecast">
+      <h3>FY2026 forecast targets €12.0B revenue and €1.22B EBITA.</h3>
+      <p>The monthly forecast model shows margin improving steadily toward the target range across the forecast window, built up from a month-by-month revenue and margin ramp rather than a flat annual assumption.</p>
+    </div>
+
+    <div class="insight" id="insight-bridge">
+      <h3>FY2025 profit improvement was driven by volume, not cost cutting.</h3>
+      <p>The profit variance bridge isolates four drivers of the FY2024-to-FY2025 EBITA change: revenue volume growth contributed +€91M, the largest single driver by far, while margin/cost pressure (-€5M) and severance costs (-€7M) partially offset it. Residual/other effects added +€7M. Net: EBITA grew from €1,013M to €1,099M, and the growth was fundamentally a volume story.</p>
+    </div>
+
+    <div class="insight" id="insight-cost">
+      <h3>Materials is the largest cost-center overrun heading into FY2026.</h3>
+      <p>Of the four tracked cost centers, Materials shows the largest budget variance at +€17.02M (flagged Escalate), followed by Direct Labor at +€8.73M (Monitor). Manufacturing OH is also over budget but smaller in magnitude, while Indirect Labor is running under budget and On Track — the one favorable line among the four.</p>
+    </div>
+  </section>
+
+  <section id="bridge-detail">
+    <div class="section-label">Profit Bridge Summary</div>
+    <table class="bridge">
+      <tr><td>FY2024 Profit</td><td>€1,013M</td></tr>
+      <tr><td>Volume Effect</td><td>+€91M</td></tr>
+      <tr><td>Margin/Cost Effect</td><td>−€5M</td></tr>
+      <tr><td>Severance Change</td><td>−€7M</td></tr>
+      <tr><td>Residual / Other</td><td>+€7M</td></tr>
+      <tr class="total"><td>FY2025 Profit</td><td>€1,099M</td></tr>
+    </table>
+  </section>
+
+  <section id="cost-detail">
+    <div class="section-label">Cost Center Budget vs. Actual</div>
+    <table class="cost">
+      <thead><tr><th>Cost Center</th><th>Budget, €M</th><th>Actual, €M</th><th>Variance, €M</th><th>Status</th></tr></thead>
+      <tbody>
+        <tr><td>Materials</td><td class="num">340.35</td><td class="num">357.37</td><td class="num">17.02</td><td class="status-escalate">Escalate</td></tr>
+        <tr><td>Direct Labor</td><td class="num">291.19</td><td class="num">299.92</td><td class="num">8.73</td><td class="status-monitor">Monitor</td></tr>
+        <tr><td>Manufacturing OH</td><td class="num">189.08</td><td class="num">190.97</td><td class="num">1.89</td><td class="status-monitor">Monitor</td></tr>
+        <tr><td>Indirect Labor</td><td class="num">124.80</td><td class="num">122.30</td><td class="num">-2.50</td><td class="status-ontrack">On Track</td></tr>
+        <tr><td>Total</td><td class="num">945.42</td><td class="num">970.56</td><td class="num">25.14</td><td></td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section id="dashboard">
+    <div class="section-label">Power BI Dashboard</div>
+    <p class="lede">All three pages of the dashboard, built on this model.</p>
+
+    <div class="dash-shot" id="dash-forecast">
+      <div class="dash-label">FY2026 Monthly Revenue Forecast</div>
+      <img src="/assets/siemens/1-forecast.jpg" alt="Power BI page showing FY2026 monthly revenue forecast and margin trend for Siemens Mobility">
+    </div>
+    <div class="dash-shot" id="dash-profit-bridge">
+      <div class="dash-label">Profit Variance Bridge: FY2024 to FY2025</div>
+      <img src="/assets/siemens/2-profit-bridge.jpg" alt="Power BI page showing profit bridge drivers from FY2024 to FY2025 EBITA">
+    </div>
+    <div class="dash-shot" id="dash-cost-control">
+      <div class="dash-label">FY2026 Forecast &amp; Cost Control</div>
+      <img src="/assets/siemens/3-cost-control.jpg" alt="Power BI page showing monthly forecast ramp and cost center budget vs actual table">
+    </div>
+  </section>
+
+  <section id="downloads">
+    <div class="section-label">Files</div>
+    <p class="lede">The full Excel model behind this analysis, for anyone who wants to look under the hood.</p>
+    <div class="downloads">
+      <a class="dl-btn" href="/files/Kucherova_Ekaterina_Siemens_FinancialAnalysis_2026.xlsx" download>Download Excel Model (.xlsx)</a>
+    </div>
+    <div class="dl-note">Built from Siemens Mobility's public FY2025 Annual Report. Independent analysis, not affiliated with or endorsed by Siemens.</div>
+  </section>
+
+</main>
+
+<footer>
+  <div><span class="name">Kate Kucherova</span> · CMA Candidate · <a href="mailto:katekucherova.nc@gmail.com">katekucherova.nc@gmail.com</a></div>
+  <div>Portfolio 2026</div>
+</footer>
+
+</body>
+</html>
