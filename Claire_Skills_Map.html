@@ -43,6 +43,17 @@
     border-radius:4px; transition:color .15s, background .15s;
   }
   nav a:hover, nav a:focus-visible{ color:#fff; background:rgba(255,255,255,.08); outline:none; }
+  nav a.current{ color:#fff; background:rgba(255,255,255,.12); }
+
+  .subnav{
+    background:#fff; border-bottom:1px solid var(--line); padding:10px 24px;
+    display:flex; gap:6px; flex-wrap:wrap; position:sticky; top:52px; z-index:40;
+  }
+  .subnav a{
+    color:var(--muted); text-decoration:none; font-size:12.5px; font-weight:600;
+    padding:5px 11px; border-radius:100px; border:1px solid var(--line); transition:border-color .15s, color .15s;
+  }
+  .subnav a:hover{ color:var(--navy); border-color:var(--navy); }
 
   /* ---- hero ---- */
   header.hero{ max-width:980px; margin:0 auto; padding:56px 24px 20px; }
@@ -85,8 +96,11 @@
   .skill-row .name{ font-weight:600; color:var(--navy); font-size:15px; }
   .tag{
     font-size:11.5px; font-weight:600; padding:3px 9px; border-radius:100px;
-    white-space:nowrap;
+    white-space:nowrap; text-decoration:none; display:inline-block;
+    transition:filter .15s, transform .15s;
+    cursor:pointer;
   }
+  .tag:hover{ filter:brightness(0.92); transform:translateY(-1px); }
   .tag.excel{ background:var(--excel-bg); color:var(--excel); }
   .tag.pbi{ background:var(--pbi-bg); color:var(--pbi); }
   .tag.case{ background:var(--case-bg); color:var(--case); }
@@ -135,14 +149,21 @@
 </head>
 <body>
 
-<nav aria-label="Section navigation">
+<nav aria-label="Site navigation">
   <span class="brand">Kate Kucherova</span>
+  <a href="/index.html">Home</a>
+  <a href="/claire-studio.html">Claire Studio</a>
+  <a href="/Claire_Skills_Map.html" class="current">Skills Map</a>
+  <a href="/index.html#contact">Contact</a>
+</nav>
+
+<div class="subnav" aria-label="On this page">
   <a href="#fpa">FP&amp;A</a>
   <a href="#accounting">Accounting</a>
   <a href="#excel">Excel</a>
   <a href="#dax">Power BI / DAX</a>
   <a href="#sql">SQL</a>
-</nav>
+</div>
 
 <header class="hero">
   <div class="formula-bar"><span class="fx">fx</span> =SKILLS.MAP("Kate Kucherova", evidence:TRUE)</div>
@@ -164,23 +185,23 @@
     <div class="section-bar">Financial Analysis &amp; FP&amp;A</div>
     <div class="section-body">
       <div class="skill-row">
-        <div class="top"><span class="name">Variance Analysis</span><span class="tag excel">Excel · Budget_vs_Actual</span><span class="tag case">Case Study · Insight 4</span></div>
+        <div class="top"><span class="name">Variance Analysis</span><a class="tag excel" href="/files/Claire_Studio_FPA_Model.xlsx" title="Download workbook — Budget_vs_Actual tab">Excel · Budget_vs_Actual</a><a class="tag case" href="/claire-studio.html#insight-4">Case Study · Insight 4</a></div>
         <div class="desc">Sign-aware favorable/unfavorable logic across 15 revenue and expense lines, with written F/U commentary.</div>
       </div>
       <div class="skill-row">
-        <div class="top"><span class="name">Break-Even / Expansion Analysis</span><span class="tag excel">Excel · Second_Hall_BreakEven</span><span class="tag pbi">Power BI · Break-Even page</span></div>
+        <div class="top"><span class="name">Break-Even / Expansion Analysis</span><a class="tag excel" href="/files/Claire_Studio_FPA_Model.xlsx" title="Download workbook — Second_Hall_BreakEven tab">Excel · Second_Hall_BreakEven</a><a class="tag pbi" href="/claire-studio.html#dash-breakeven">Power BI · Break-Even page</a></div>
         <div class="desc">Built a recurring break-even model for a real leasing decision — incremental fixed cost ÷ contribution margin — and tracked coverage over three time windows.</div>
       </div>
       <div class="skill-row">
-        <div class="top"><span class="name">Unit Economics</span><span class="tag excel">Excel · Cost_Per_Class_Model</span></div>
+        <div class="top"><span class="name">Unit Economics</span><a class="tag excel" href="/files/Claire_Studio_FPA_Model.xlsx" title="Download workbook — Cost_Per_Class_Model tab">Excel · Cost_Per_Class_Model</a></div>
         <div class="desc">Cost per class, revenue per student, and contribution margin by program using peak-month data.</div>
       </div>
       <div class="skill-row">
-        <div class="top"><span class="name">Budget-to-Actual Reconciliation</span><span class="tag excel">Excel · Budget_vs_Actual, Management_Dashboard</span></div>
+        <div class="top"><span class="name">Budget-to-Actual Reconciliation</span><a class="tag excel" href="/files/Claire_Studio_FPA_Model.xlsx" title="Download workbook — Budget_vs_Actual, Management_Dashboard tabs">Excel · Budget_vs_Actual, Management_Dashboard</a></div>
         <div class="desc">Constructed a full annual operating budget from run-rate assumptions and reconciled monthly against actuals.</div>
       </div>
       <div class="skill-row">
-        <div class="top"><span class="name">Revenue / Program Mix Analysis</span><span class="tag pbi">Power BI · Program Mix page</span></div>
+        <div class="top"><span class="name">Revenue / Program Mix Analysis</span><a class="tag pbi" href="/claire-studio.html#dash-program-mix">Power BI · Program Mix page</a></div>
         <div class="desc">Subscription vs. one-time revenue split by program, used to inform a real program-discontinuation decision.</div>
       </div>
     </div>
@@ -191,23 +212,23 @@
     <div class="section-bar">Accounting</div>
     <div class="section-body">
       <div class="skill-row">
-        <div class="top"><span class="name">Revenue Recognition</span><span class="tag excel">Excel · Accounting_Treatment</span></div>
+        <div class="top"><span class="name">Revenue Recognition</span><a class="tag excel" href="/files/Claire_Studio_FPA_Model.xlsx" title="Download workbook — Accounting_Treatment tab">Excel · Accounting_Treatment</a></div>
         <div class="desc">Applied consistent recognition timing across subscription and one-time revenue types.</div>
       </div>
       <div class="skill-row">
-        <div class="top"><span class="name">Fixed Asset Depreciation</span><span class="tag excel">Excel · Fixed_Asset_Depreciation</span></div>
+        <div class="top"><span class="name">Fixed Asset Depreciation</span><a class="tag excel" href="/files/Claire_Studio_FPA_Model.xlsx" title="Download workbook — Fixed_Asset_Depreciation tab">Excel · Fixed_Asset_Depreciation</a></div>
         <div class="desc">Straight-line depreciation across three asset classes with different useful lives (3/5/7-year).</div>
       </div>
       <div class="skill-row">
-        <div class="top"><span class="name">Journal Entries</span><span class="tag excel">Excel · Journal_Entries</span></div>
+        <div class="top"><span class="name">Journal Entries</span><a class="tag excel" href="/files/Claire_Studio_FPA_Model.xlsx" title="Download workbook — Journal_Entries tab">Excel · Journal_Entries</a></div>
         <div class="desc">12 double-entry journal entries with a live debit/credit balance check.</div>
       </div>
       <div class="skill-row">
-        <div class="top"><span class="name">Inventory &amp; COGS</span><span class="tag excel">Excel · Inventory_Rollforward</span></div>
+        <div class="top"><span class="name">Inventory &amp; COGS</span><a class="tag excel" href="/files/Claire_Studio_FPA_Model.xlsx" title="Download workbook — Inventory_Rollforward tab">Excel · Inventory_Rollforward</a></div>
         <div class="desc">Weighted-average costing for resale inventory, tied to Cost of Goods Sold.</div>
       </div>
       <div class="skill-row">
-        <div class="top"><span class="name">Owner Equity Treatment</span><span class="tag excel">Excel · Model_Data, Business_Overview</span></div>
+        <div class="top"><span class="name">Owner Equity Treatment</span><a class="tag excel" href="/files/Claire_Studio_FPA_Model.xlsx" title="Download workbook — Model_Data, Business_Overview tabs">Excel · Model_Data, Business_Overview</a></div>
         <div class="desc">Distinguished fixed owner salary (payroll expense) from profit distributions (equity), per documented policy.</div>
       </div>
     </div>
@@ -330,7 +351,7 @@ RETURN DIVIDE(OneTimeCount, TotalCount, 0)</td></tr>
 </main>
 
 <footer>
-  <div><span class="name">Kate Kucherova</span> · CMA Candidate · kate.kucherova@email.com</div>
+  <div><span class="name">Kate Kucherova</span> · CMA Candidate · katekucherova.nc@gmail.com</div>
   <div>Portfolio 2026 · Skills Map v1</div>
 </footer>
 
