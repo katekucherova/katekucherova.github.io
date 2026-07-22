@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kate Kucherova — Portfolio</title>
+<style>
+  :root{
+    --navy:#2B2E4A;
+    --navy-soft:#3d4166;
+    --band:#F2F3F7;
+    --canvas:#FAFAFA;
+    --ink:#26283a;
+    --muted:#65697e;
+    --line:#dfe1ea;
+    --excel:#1e7245;
+    --excel-bg:#e7f3ec;
+    --pbi:#a97a00;
+    --pbi-bg:#fbf2dc;
+    --case:#2B2E4A;
+    --case-bg:#e9eaf1;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0; background:var(--canvas); color:var(--ink);
+    font-family:"Segoe UI", "Segoe UI Web", system-ui, -apple-system, Roboto, Arial, sans-serif;
+    line-height:1.55;
+  }
+  code, .mono{ font-family:"Cascadia Code","Consolas","SFMono-Regular",Menlo,monospace; }
+
+  /* ---- nav ---- */
+  nav{
+    position:sticky; top:0; z-index:50; background:var(--navy); color:#fff;
+    display:flex; align-items:center; gap:2px; padding:0 24px; height:52px;
+    overflow-x:auto; white-space:nowrap; box-shadow:0 1px 0 rgba(0,0,0,.15);
+  }
+  nav .brand{ display:flex; align-items:center; gap:10px; margin-right:24px; }
+  nav .brand img{ height:30px; width:auto; display:block; }
+  nav .brand span{ font-weight:600; letter-spacing:.2px; color:#fff; }
+  nav .links{ display:flex; align-items:center; gap:2px; }
+  nav a{
+    color:#c9cbe0; text-decoration:none; font-size:14px; padding:8px 12px;
+    border-radius:4px; transition:color .15s, background .15s;
+  }
+  nav a:hover, nav a:focus-visible{ color:#fff; background:rgba(255,255,255,.08); outline:none; }
+  nav a.current{ color:#fff; background:rgba(255,255,255,.12); }
+
+  /* ---- hero ---- */
+  header.hero{ max-width:980px; margin:0 auto; padding:64px 24px 20px; }
+  .formula-bar{
+    display:flex; align-items:center; gap:10px; font-family:"Cascadia Code","Consolas",monospace;
+    font-size:13px; color:var(--muted); border:1px solid var(--line); background:#fff;
+    border-radius:6px; padding:8px 14px; margin-bottom:28px; width:fit-content;
+  }
+  .formula-bar .fx{ color:var(--navy); font-weight:700; }
+  header.hero h1{ font-size:36px; margin:0 0 12px; color:var(--navy); letter-spacing:-.2px; max-width:680px; }
+  header.hero .sub{ color:var(--muted); font-size:16px; margin:0 0 8px; max-width:620px; }
+  header.hero .role{ color:var(--navy); font-size:14px; font-weight:600; letter-spacing:.02em; text-transform:uppercase; margin-bottom:4px; }
+
+  /* ---- sections ---- */
+  main{ max-width:980px; margin:0 auto; padding:24px 24px 80px; }
+  section{ margin-top:48px; scroll-margin-top:64px; }
+  .section-label{
+    font-size:12.5px; font-weight:700; text-transform:uppercase; letter-spacing:.06em;
+    color:var(--muted); margin-bottom:14px;
+  }
+
+  /* project cards */
+  .project-grid{ display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+  .project-card{
+    display:block; border:1px solid var(--line); background:#fff; border-radius:8px;
+    padding:22px; text-decoration:none; color:inherit; transition:border-color .15s, transform .15s;
+  }
+  .project-card:hover{ border-color:var(--navy); transform:translateY(-2px); }
+  .project-card .tag{
+    font-size:11.5px; font-weight:600; padding:3px 9px; border-radius:100px;
+    background:var(--case-bg); color:var(--case); display:inline-block; margin-bottom:10px;
+  }
+  .project-card h3{ margin:0 0 6px; color:var(--navy); font-size:17px; }
+  .project-card p{ margin:0; color:var(--muted); font-size:14px; }
+  .project-card.placeholder{ opacity:.55; pointer-events:none; }
+  .project-card.placeholder .tag{ background:var(--band); color:var(--muted); }
+
+  footer{ max-width:980px; margin:0 auto; padding:32px 24px 60px; border-top:1px solid var(--line); color:var(--muted); font-size:13px; }
+  footer a{ color:var(--navy); }
+  footer .name{ color:var(--navy); font-weight:600; }
+
+  @media (max-width:640px){
+    .project-grid{ grid-template-columns:1fr; }
+    header.hero h1{ font-size:27px; }
+  }
+  @media (prefers-reduced-motion:reduce){
+    html{ scroll-behavior:auto; }
+    *{ transition:none !important; }
+  }
+</style>
+</head>
+<body>
+
+<nav aria-label="Site navigation">
+  <div class="brand">
+    <img src="/assets/Logo_Claire.png" alt="Claire Studio logo">
+    <span>Kate Kucherova</span>
+  </div>
+  <div class="links">
+    <a href="/index.html" class="current">Home</a>
+    <a href="/claire-studio.html">Claire Studio</a>
+    <a href="/Claire_Skills_Map.html">Skills Map</a>
+    <a href="/index.html#contact">Contact</a>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="formula-bar"><span class="fx">fx</span> =HOME("Kate Kucherova", portfolio:TRUE)</div>
+  <div class="role">CMA Candidate · Finance &amp; FP&amp;A</div>
+  <h1>Portfolio work, built from real financial data.</h1>
+  <p class="sub">Accounting Analyst · Financial Analyst · Operations Finance. Each project below traces to a real source — an Excel model, a live Power BI dashboard, or both.</p>
+</header>
+
+<main>
+
+  <section id="projects">
+    <div class="section-label">Projects</div>
+    <div class="project-grid">
+
+      <a class="project-card" href="/claire-studio.html">
+        <span class="tag">FP&amp;A · Small Business Finance</span>
+        <h3>Claire Studio</h3>
+        <p>End-to-end FP&amp;A case study built from 847 real cash transactions — a 16-tab Excel model and a 5-page Power BI dashboard for a children's fitness &amp; dance studio.</p>
+      </a>
+
+      <a class="project-card" href="/Claire_Skills_Map.html">
+        <span class="tag">Reference</span>
+        <h3>Skills Map</h3>
+        <p>Every finance, accounting, Excel, and DAX skill demonstrated across projects — each one traced to a specific tab, page, or measure.</p>
+      </a>
+
+      <div class="project-card placeholder">
+        <span class="tag">Coming soon</span>
+        <h3>Siemens Mobility Analysis</h3>
+        <p>Independent financial performance analysis — pending review before publishing.</p>
+      </div>
+
+      <div class="project-card placeholder">
+        <span class="tag">Coming soon</span>
+        <h3>Revenue Recognition Project</h3>
+        <p>Material not yet reviewed.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="section-label">Contact</div>
+    <p style="color:var(--muted); font-size:15px;">
+      Kate Kucherova &nbsp;·&nbsp; CMA Candidate &nbsp;·&nbsp;
+      <a href="mailto:katekucherova.nc@gmail.com" style="color:var(--navy);">katekucherova.nc@gmail.com</a>
+    </p>
+  </section>
+
+</main>
+
+<footer>
+  <div><span class="name">Kate Kucherova</span> · CMA Candidate · <a href="mailto:katekucherova.nc@gmail.com">katekucherova.nc@gmail.com</a></div>
+  <div>Portfolio 2026</div>
+</footer>
+
+</body>
+</html>
