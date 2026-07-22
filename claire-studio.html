@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Claire Studio — FP&amp;A Case Study | Kate Kucherova</title>
+<style>
+  :root{
+    --navy:#2B2E4A;
+    --band:#F2F3F7;
+    --canvas:#FAFAFA;
+    --ink:#26283a;
+    --muted:#65697e;
+    --line:#dfe1ea;
+    --excel:#1e7245;
+    --excel-bg:#e7f3ec;
+    --pbi:#a97a00;
+    --pbi-bg:#fbf2dc;
+    --case:#2B2E4A;
+    --case-bg:#e9eaf1;
+    --fav:#2E9E5B;
+    --unfav:#C0392B;
+    --karate:#F0574F;
+    --choreo:#F5934F;
+    --gym:#8F95F5;
+    --fit:#8E5578;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0; background:var(--canvas); color:var(--ink);
+    font-family:"Segoe UI", "Segoe UI Web", system-ui, -apple-system, Roboto, Arial, sans-serif;
+    line-height:1.6;
+  }
+  code, .mono{ font-family:"Cascadia Code","Consolas","SFMono-Regular",Menlo,monospace; }
+
+  /* ---- nav ---- */
+  nav{
+    position:sticky; top:0; z-index:50; background:var(--navy); color:#fff;
+    display:flex; align-items:center; gap:2px; padding:0 24px; height:52px;
+    overflow-x:auto; white-space:nowrap; box-shadow:0 1px 0 rgba(0,0,0,.15);
+  }
+  nav .brand{ margin-right:24px; }
+  nav .brand span{ font-weight:600; letter-spacing:.2px; color:#fff; }
+  nav .links{ display:flex; align-items:center; gap:2px; }
+  nav a{
+    color:#c9cbe0; text-decoration:none; font-size:14px; padding:8px 12px;
+    border-radius:4px; transition:color .15s, background .15s;
+  }
+  nav a:hover, nav a:focus-visible{ color:#fff; background:rgba(255,255,255,.08); outline:none; }
+  nav a.current{ color:#fff; background:rgba(255,255,255,.12); }
+
+  /* ---- cover ---- */
+  .cover{
+    background:linear-gradient(180deg, #fff 0%, var(--band) 100%);
+    border-bottom:1px solid var(--line);
+    padding:56px 24px 44px;
+    text-align:center;
+  }
+  .cover img.logo{ height:150px; width:auto; display:block; margin:0 auto 8px; }
+  .cover .role{ color:var(--navy); font-size:13px; font-weight:600; letter-spacing:.06em; text-transform:uppercase; margin-bottom:10px; }
+  .cover h1{ font-size:30px; color:var(--navy); margin:0 auto 12px; max-width:680px; letter-spacing:-.2px; }
+  .cover .sub{ color:var(--muted); font-size:15.5px; max-width:640px; margin:0 auto; }
+  .cover .badges{ margin-top:22px; display:flex; gap:8px; justify-content:center; flex-wrap:wrap; }
+  .cover .badge{ font-size:11.5px; font-weight:600; padding:4px 11px; border-radius:100px; background:#fff; border:1px solid var(--line); color:var(--muted); }
+
+  /* ---- sections ---- */
+  main{ max-width:900px; margin:0 auto; padding:48px 24px 80px; }
+  section{ margin-top:52px; scroll-margin-top:64px; }
+  .section-label{
+    font-size:12.5px; font-weight:700; text-transform:uppercase; letter-spacing:.06em;
+    color:var(--muted); margin-bottom:14px;
+  }
+  p{ color:var(--ink); font-size:15px; }
+  .lede{ color:var(--muted); font-size:15px; }
+
+  .flow{
+    font-family:"Cascadia Code","Consolas",monospace; font-size:12.5px; color:var(--navy);
+    background:#fff; border:1px solid var(--line); border-radius:6px; padding:14px 16px;
+    margin-top:16px; overflow-x:auto; white-space:nowrap;
+  }
+
+  /* stat strip */
+  .stat-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--line); border:1px solid var(--line); border-radius:8px; overflow:hidden; margin-top:8px; }
+  .stat-grid div{ background:#fff; padding:18px 16px; }
+  .stat-grid .num{ font-family:"Cascadia Code","Consolas",monospace; font-size:21px; font-weight:700; color:var(--navy); }
+  .stat-grid .lbl{ font-size:12px; color:var(--muted); margin-top:4px; }
+
+  /* insight cards */
+  .insight{ border:1px solid var(--line); background:#fff; border-radius:8px; padding:20px 22px; margin-bottom:14px; }
+  .insight h3{ margin:0 0 8px; color:var(--navy); font-size:15.5px; }
+  .insight p{ margin:0; color:var(--muted); font-size:14.5px; }
+
+  /* skills table */
+  .skill-row{ display:grid; grid-template-columns:220px 1fr; gap:16px; padding:12px 0; border-bottom:1px solid var(--line); }
+  .skill-row:last-child{ border-bottom:none; }
+  .skill-row .name{ font-weight:600; color:var(--navy); font-size:14px; }
+  .skill-row .desc{ color:var(--muted); font-size:14px; }
+
+  /* downloads */
+  .downloads{ display:flex; gap:12px; flex-wrap:wrap; margin-top:8px; }
+  .dl-btn{
+    display:inline-flex; align-items:center; gap:8px; text-decoration:none;
+    background:var(--navy); color:#fff; font-size:14px; font-weight:600;
+    padding:12px 18px; border-radius:6px; transition:background .15s;
+  }
+  .dl-btn:hover{ background:#3d4166; }
+  .dl-btn.secondary{ background:#fff; color:var(--navy); border:1px solid var(--line); }
+  .dl-btn.secondary:hover{ border-color:var(--navy); }
+  .dl-note{ color:var(--muted); font-size:12.5px; margin-top:10px; }
+
+  /* dashboard screenshots */
+  .dash-shot{ margin-bottom:36px; }
+  .dash-shot .dash-label{ font-size:13px; font-weight:700; color:var(--navy); margin-bottom:8px; }
+  .dash-shot img{ width:100%; height:auto; display:block; border:1px solid var(--line); border-radius:6px; box-shadow:0 2px 10px rgba(43,46,74,.06); }
+
+  footer{ max-width:900px; margin:0 auto; padding:32px 24px 60px; border-top:1px solid var(--line); color:var(--muted); font-size:13px; }
+  footer a{ color:var(--navy); }
+  footer .name{ color:var(--navy); font-weight:600; }
+
+  @media (max-width:640px){
+    .stat-grid{ grid-template-columns:1fr 1fr; }
+    .skill-row{ grid-template-columns:1fr; gap:4px; }
+    .cover h1{ font-size:23px; }
+    .cover img.logo{ height:110px; }
+  }
+</style>
+</head>
+<body>
+
+<nav aria-label="Site navigation">
+  <div class="brand"><span>Kate Kucherova</span></div>
+  <div class="links">
+    <a href="/index.html">Home</a>
+    <a href="/claire-studio.html" class="current">Claire Studio</a>
+    <a href="/Claire_Skills_Map.html">Skills Map</a>
+    <a href="/index.html#contact">Contact</a>
+  </div>
+</nav>
+
+<div class="cover">
+  <img class="logo" src="/assets/Logo_Claire.png" alt="Claire — Studio of Physical & Aesthetic Development logo">
+  <div class="role">FP&amp;A &amp; Small Business Finance Case Study</div>
+  <h1>Claire Studio — from 847 raw cash transactions to a full FP&amp;A model.</h1>
+  <p class="sub">A children's fitness, dance, and martial arts studio in Bataysk, Russia. I co-founded it, ran its finances end-to-end, and built this model from the studio's real operating records.</p>
+  <div class="badges">
+    <span class="badge">16-tab Excel model</span>
+    <span class="badge">5-page Power BI dashboard</span>
+    <span class="badge">Nov 2019 – Jul 2022</span>
+  </div>
+</div>
+
+<main>
+
+  <section id="about">
+    <div class="section-label">About the Business</div>
+    <p>Claire — Studio of Physical &amp; Aesthetic Development offered choreography, fitness, karate, and gymnastics across up to two rented halls, serving a peak of 53 students across five programs at its height in Spring 2021.</p>
+    <p>I co-founded the studio in November 2019 and held full ownership of its financial operations — serving as financial manager and payroll administrator throughout, along with day-to-day duties beyond finance to keep the studio lean. The studio operated from November 2019 through July 2022, at which point I emigrated to the United States and transferred the business to my co-founder.</p>
+  </section>
+
+  <section id="data-source">
+    <div class="section-label">Data Source &amp; What Was Built</div>
+    <p>This project began with 847 real cash transactions from the studio's operating records — a messy mix of revenue, expenses, owner draws, capital contributions, and inventory purchases recorded in raw ledger format. I cleaned, classified, and restructured this data into a formula-driven FP&amp;A model built entirely in Excel.</p>
+    <div class="flow">Structured source data → Monthly P&amp;L → Annual KPIs → Budget vs Actual → Management Financials → Unit Economics &amp; Break-Even</div>
+  </section>
+
+  <section id="results">
+    <div class="section-label">Key Financial Results</div>
+    <div class="stat-grid">
+      <div><div class="num">$275,336</div><div class="lbl">Total Revenue (Nov 2019 – Jul 2022)</div></div>
+      <div><div class="num">$120,892</div><div class="lbl">Peak Year Revenue (2021)</div></div>
+      <div><div class="num">$84,990</div><div class="lbl">All-Period Net Operating Income</div></div>
+      <div><div class="num">30.9%</div><div class="lbl">All-Period NOI Margin</div></div>
+      <div><div class="num">$35,018</div><div class="lbl">Cumulative Cash After Owner Draws</div></div>
+      <div><div class="num">$14,926</div><div class="lbl">Best Month (Mar 2022)</div></div>
+    </div>
+  </section>
+
+  <section id="insights">
+    <div class="section-label">Key Business Insights</div>
+
+    <div class="insight">
+      <h3>1. Rent was the dominant fixed cost — and the expansion made it bigger.</h3>
+      <p>Rent accounted for $110,230 of total operating costs across all periods — the single largest expense category, exceeding payroll by nearly 3x. When the second hall was leased in early 2021, monthly rent increased from $2,800 to $4,675 — a 67% step-up in the largest fixed cost. The break-even analysis shows this expansion was not fully covered by direct expansion revenue until late 2021, but the total business revenue grew enough to absorb the higher cost base.</p>
+    </div>
+
+    <div class="insight">
+      <h3>2. Choreography was the studio's core revenue driver throughout its life.</h3>
+      <p>Choreography generated $141,000 across the full period — just over half of total revenue — and remained the largest single program even as karate launched in 2020 and hall rental income grew from 2021 onward. That concentration made pricing decisions on this one program, including a 25% price increase in September 2021, disproportionately important to the studio's overall trajectory.</p>
+    </div>
+
+    <div class="insight">
+      <h3>3. COVID created a clean before/after view of the business.</h3>
+      <p>April and May 2020 were excluded from the model due to full closure during COVID lockdowns. The reopening in June 2020 effectively resets the business — and the contrast is sharp. Pre-COVID revenue averaged around $4,050/month (Nov 2019–Mar 2020); post-reopening the studio rebuilt quickly, reaching $10,837 in September 2020. By 2022 the run-rate exceeded $13,000/month before the wind-down began.</p>
+    </div>
+
+    <div class="insight">
+      <h3>4. The 2021 budget was favorable across nearly every line.</h3>
+      <p>Actual 2021 revenue exceeded budget by $3,192 (2.7%), driven by strong choreography and karate enrollment. Expenses came in only $774 over budget despite adding a second hall — because advertising spend was $489 below plan and class supply costs were $297 below plan. NOI beat budget by $2,418. The one unfavorable revenue line was fitness, which recovered more slowly than planned.</p>
+    </div>
+  </section>
+
+  <section id="dashboard">
+    <div class="section-label">Power BI Dashboard</div>
+    <p class="lede">All five pages of the live dashboard, built on this same model.</p>
+
+    <div class="dash-shot">
+      <div class="dash-label">Overview</div>
+      <img src="/assets/dashboard/1-overview.jpg" alt="Power BI Overview page: revenue trend and seasonality index for Claire Studio">
+    </div>
+    <div class="dash-shot">
+      <div class="dash-label">Budget vs. Actual</div>
+      <img src="/assets/dashboard/2-budget-vs-actual.jpg" alt="Power BI Budget vs Actual page: 2021 variance table and monthly actual vs budget chart">
+    </div>
+    <div class="dash-shot">
+      <div class="dash-label">Program Mix</div>
+      <img src="/assets/dashboard/3-program-mix.jpg" alt="Power BI Program Mix page: revenue by program over time and payment mix table">
+    </div>
+    <div class="dash-shot">
+      <div class="dash-label">Profitability</div>
+      <img src="/assets/dashboard/4-profitability.jpg" alt="Power BI Profitability page: NOI margin trend and cost breakdown charts">
+    </div>
+    <div class="dash-shot">
+      <div class="dash-label">Break-Even Analysis</div>
+      <img src="/assets/dashboard/5-breakeven.jpg" alt="Power BI Break-Even Analysis page: second hall expansion break-even chart and coverage table">
+    </div>
+  </section>
+
+  <section id="skills">
+    <div class="section-label">Finance &amp; Accounting Skills Demonstrated</div>
+
+    <div class="skill-row"><div class="name">Data Cleaning &amp; Classification</div><div class="desc">Transformed 847 raw cash transactions into a structured, auditable model with consistent revenue and expense categories.</div></div>
+    <div class="skill-row"><div class="name">Revenue Analysis</div><div class="desc">Built monthly P&amp;L by program (choreography, fitness, karate) showing enrollment trends, price changes, and seasonal patterns.</div></div>
+    <div class="skill-row"><div class="name">Budgeting &amp; Variance Analysis</div><div class="desc">Constructed a 2021 management operating budget from run-rate assumptions; produced monthly and annual budget vs actual with F/U flags and written commentary.</div></div>
+    <div class="skill-row"><div class="name">Unit Economics</div><div class="desc">Modeled cost per class, revenue per student, and contribution margin by program using April 2021 peak-month data.</div></div>
+    <div class="skill-row"><div class="name">Expansion Decision Analysis</div><div class="desc">Built a break-even model for the second hall leasing decision; quantified incremental fixed cost and analyzed revenue coverage over time.</div></div>
+    <div class="skill-row"><div class="name">Management Financials</div><div class="desc">Produced income statement, cash flow summary, and financial position snapshot following U.S. GAAP conventions adapted for a small service business.</div></div>
+    <div class="skill-row"><div class="name">Accounting Treatment</div><div class="desc">Applied correct classification across revenue recognition, COGS, depreciation, owner distributions, deferred revenue, and journal entries.</div></div>
+    <div class="skill-row"><div class="name">Excel Financial Modeling</div><div class="desc">Built 16-tab formula-driven workbook: data flows from structured source tab through monthly P&amp;L to all downstream analysis.</div></div>
+  </section>
+
+  <section id="downloads">
+    <div class="section-label">Files</div>
+    <p class="lede">The full Excel model and the original written case study, for anyone who wants to look under the hood.</p>
+    <div class="downloads">
+      <a class="dl-btn" href="/files/Claire_Studio_FPA_Model.xlsx" download>Download Excel Model (.xlsx)</a>
+      <a class="dl-btn secondary" href="/files/Claire_Studio_Case_Study.pdf" download>Download Case Study (PDF)</a>
+    </div>
+    <div class="dl-note">See the Skills Map for the full DAX measure and Excel formula inventory behind this project.</div>
+  </section>
+
+</main>
+
+<footer>
+  <div><span class="name">Kate Kucherova</span> · CMA Candidate · <a href="mailto:katekucherova.nc@gmail.com">katekucherova.nc@gmail.com</a></div>
+  <div>Portfolio 2026</div>
+</footer>
+
+</body>
+</html>
