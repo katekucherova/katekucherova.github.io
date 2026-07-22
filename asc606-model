@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ASC 606 Revenue Recognition Model | Kate Kucherova</title>
+<style>
+  :root{
+    --navy:#2B2E4A;
+    --band:#F2F3F7;
+    --canvas:#FAFAFA;
+    --ink:#26283a;
+    --muted:#65697e;
+    --line:#dfe1ea;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0; background:var(--canvas); color:var(--ink);
+    font-family:"Segoe UI", "Segoe UI Web", system-ui, -apple-system, Roboto, Arial, sans-serif;
+    line-height:1.6;
+  }
+  code, .mono{ font-family:"Cascadia Code","Consolas","SFMono-Regular",Menlo,monospace; }
+
+  nav{
+    position:sticky; top:0; z-index:50; background:var(--navy); color:#fff;
+    display:flex; align-items:center; gap:2px; padding:0 24px; height:52px;
+    overflow-x:auto; white-space:nowrap; box-shadow:0 1px 0 rgba(0,0,0,.15);
+  }
+  nav .brand{ margin-right:24px; }
+  nav .brand span{ font-weight:600; letter-spacing:.2px; color:#fff; }
+  nav .links{ display:flex; align-items:center; gap:2px; }
+  nav a{
+    color:#c9cbe0; text-decoration:none; font-size:14px; padding:8px 12px;
+    border-radius:4px; transition:color .15s, background .15s;
+  }
+  nav a:hover, nav a:focus-visible{ color:#fff; background:rgba(255,255,255,.08); outline:none; }
+  nav a.current{ color:#fff; background:rgba(255,255,255,.12); }
+
+  .cover{
+    background:linear-gradient(180deg, #fff 0%, var(--band) 100%);
+    border-bottom:1px solid var(--line);
+    padding:44px 24px 36px;
+    text-align:center;
+  }
+  .cover .role{ color:var(--navy); font-size:13px; font-weight:600; letter-spacing:.06em; text-transform:uppercase; margin-bottom:10px; }
+  .cover h1{ font-size:28px; color:var(--navy); margin:0 auto 12px; max-width:640px; letter-spacing:-.2px; }
+  .cover .sub{ color:var(--muted); font-size:15px; max-width:600px; margin:0 auto; }
+
+  .notice{
+    max-width:700px; margin:24px auto 0; background:#fff; border:1px solid var(--line);
+    border-left:4px solid var(--navy); border-radius:0 6px 6px 0; padding:14px 18px;
+    font-size:14px; color:var(--ink); text-align:left;
+  }
+  .notice b{ color:var(--navy); }
+
+  main{ max-width:700px; margin:0 auto; padding:36px 24px 70px; }
+  section{ margin-top:34px; }
+  .section-label{
+    font-size:12.5px; font-weight:700; text-transform:uppercase; letter-spacing:.06em;
+    color:var(--muted); margin-bottom:12px;
+  }
+  p{ color:var(--ink); font-size:15px; }
+
+  .step{ border:1px solid var(--line); background:#fff; border-radius:8px; padding:16px 20px; margin-bottom:10px; }
+  .step .num{ display:inline-flex; align-items:center; justify-content:center; width:22px; height:22px; border-radius:50%; background:var(--navy); color:#fff; font-size:12px; font-weight:700; margin-right:8px; }
+  .step .title{ font-weight:600; color:var(--navy); font-size:14.5px; }
+  .step p{ margin:6px 0 0 30px; font-size:14px; color:var(--muted); }
+
+  table{ width:100%; border-collapse:collapse; margin-top:8px; font-size:13.5px; background:#fff; border:1px solid var(--line); border-radius:8px; overflow:hidden; }
+  th{ text-align:left; background:var(--band); color:var(--navy); font-size:11px; text-transform:uppercase; letter-spacing:.03em; padding:8px 10px; }
+  td{ padding:8px 10px; border-bottom:1px solid var(--line); }
+  tr:last-child td{ border-bottom:none; }
+
+  .dl-btn{
+    display:inline-flex; align-items:center; gap:8px; text-decoration:none;
+    background:var(--navy); color:#fff; font-size:14px; font-weight:600;
+    padding:12px 18px; border-radius:6px; transition:background .15s; margin-top:8px;
+  }
+  .dl-btn:hover{ background:#3d4166; }
+  .dl-note{ color:var(--muted); font-size:12.5px; margin-top:10px; }
+
+  footer{ max-width:700px; margin:0 auto; padding:28px 24px 60px; border-top:1px solid var(--line); color:var(--muted); font-size:13px; }
+  footer a{ color:var(--navy); }
+  footer .name{ color:var(--navy); font-weight:600; }
+</style>
+</head>
+<body>
+
+<nav aria-label="Site navigation">
+  <div class="brand"><span>Kate Kucherova</span></div>
+  <div class="links">
+    <a href="/index.html">Home</a>
+    <a href="/claire-studio.html">Claire Studio</a>
+    <a href="/siemens-mobility.html">Siemens Mobility</a>
+    <a href="/Claire_Skills_Map.html">Skills Map</a>
+    <a href="/index.html#contact">Contact</a>
+  </div>
+</nav>
+
+<div class="cover">
+  <div class="role">Technical Exercise</div>
+  <h1>ASC 606 Revenue Recognition Model</h1>
+  <p class="sub">A cost-to-cost percentage-of-completion model built to demonstrate correct ASC 606 mechanics on a long-term contract.</p>
+</div>
+
+<div class="notice"><b>This is a skill demonstration, not a case study.</b> Unlike Claire Studio and the Siemens Mobility analysis, this model uses an illustrative contract — not real transactions or a real company. It exists to show the mechanics of ASC 606 revenue recognition are built correctly, since several roles I've applied to have asked for exactly this.</div>
+
+<main>
+
+  <section id="what-it-shows">
+    <div class="section-label">What This Demonstrates</div>
+    <p>An 18-month, $5M fixed-price equipment installation contract with four billing milestones. Revenue is recognized using the cost-to-cost method — the percentage of total estimated cost incurred each month drives how much revenue is recognized that month, independent of when the customer is actually billed.</p>
+  </section>
+
+  <section id="steps">
+    <div class="section-label">The Five ASC 606 Steps, Applied</div>
+    <p>This is the actual ASC 606 SUMMARY tab from the workbook — not a restated summary.</p>
+    <img src="/assets/asc606/summary.jpg" alt="ASC 606 Summary tab from the Excel model, walking through all five revenue recognition steps" style="width:100%; height:auto; display:block; border:1px solid var(--line); border-radius:6px; box-shadow:0 2px 10px rgba(43,46,74,.06); margin-top:8px;">
+  </section>
+
+  <section id="mechanics">
+    <div class="section-label">Built-In Self-Checks</div>
+    <table>
+      <tr><td>Milestone billing percentages</td><td>Must sum to 100%</td></tr>
+      <tr><td>Total revenue recognized</td><td>Must equal total contract value</td></tr>
+      <tr><td>Ending contract asset / (liability)</td><td>Must net to zero at contract close</td></tr>
+    </table>
+    <p style="margin-top:10px;">Each month, the model also classifies the position as a contract asset (revenue recognized ahead of billing) or a contract liability (billed ahead of revenue recognized) — the core judgment ASC 606 requires.</p>
+  </section>
+
+  <section id="download">
+    <div class="section-label">File</div>
+    <a class="dl-btn" href="/files/Kucherova_Ekaterina_ASC606_RevenueRecognition_Model.xlsx" download>⬇ Download Excel Model (.xlsx)</a>
+    <div class="dl-note">Contract Setup, Revenue Recognition Schedule, Cost Tracking, and ASC 606 Summary tabs.</div>
+  </section>
+
+</main>
+
+<footer>
+  <div><span class="name">Kate Kucherova</span> · CMA Candidate · <a href="mailto:katekucherova.nc@gmail.com">katekucherova.nc@gmail.com</a></div>
+  <div>Portfolio 2026</div>
+</footer>
+
+</body>
+</html>
