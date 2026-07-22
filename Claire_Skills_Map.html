@@ -160,6 +160,7 @@
 
 <div class="subnav" aria-label="On this page">
   <a href="#fpa">FP&amp;A</a>
+  <a href="#exercises">Technical Exercises</a>
   <a href="#accounting">Accounting</a>
   <a href="#excel">Excel</a>
   <a href="#dax">Power BI / DAX</a>
@@ -169,7 +170,7 @@
 <header class="hero">
   <div class="formula-bar"><span class="fx">fx</span> =SKILLS.MAP("Kate Kucherova", evidence:TRUE)</div>
   <h1>Every skill here traces to a source you can open.</h1>
-  <p class="sub">No line below is asserted without a specific tab, page, or measure behind it. Source project: Claire Studio FP&amp;A Model — a 16-tab Excel workbook and 5-page Power BI dashboard built from 847 real cash transactions.</p>
+  <p class="sub">No line below is asserted without a specific tab, page, or measure behind it. Source projects: Claire Studio FP&amp;A Model (16-tab Excel workbook, 5-page Power BI dashboard, 847 real cash transactions) and Siemens Mobility Financial Analysis (7-tab Excel workbook, 3-page Power BI dashboard, built from public FY2025 Annual Report data).</p>
 
   <div class="stat-strip">
     <div><div class="num">16</div><div class="lbl">Excel tabs</div></div>
@@ -177,6 +178,7 @@
     <div><div class="num">806</div><div class="lbl">INDEX/MATCH lookups</div></div>
     <div><div class="num">100%</div><div class="lbl">error-guarded</div></div>
   </div>
+  <div style="font-size:11.5px; color:var(--muted); margin-top:8px;">Figures above describe the Claire Studio workbook and dashboard specifically.</div>
 </header>
 
 <main>
@@ -204,6 +206,34 @@
       <div class="skill-row">
         <div class="top"><span class="name">Revenue / Program Mix Analysis</span><a class="tag pbi" href="/claire-studio.html#dash-program-mix">Power BI · Program Mix page</a></div>
         <div class="desc">Subscription vs. one-time revenue split by program, used to inform a real program-discontinuation decision.</div>
+      </div>
+      <div class="skill-row">
+        <div class="top"><span class="name">Profit Variance Bridge Analysis</span><a class="tag excel" href="/files/Kucherova_Ekaterina_Siemens_FinancialAnalysis_2026.xlsx" title="Download workbook — ANALYSIS tab">Excel · ANALYSIS (Siemens)</a><a class="tag pbi" href="/siemens-mobility.html#dash-profit-bridge">Power BI · Profit Bridge page</a></div>
+        <div class="desc">Self-balancing bridge decomposing a real company's year-over-year EBITA change into volume, margin/cost, and severance effects, with a built-in zero-variance model check.</div>
+      </div>
+      <div class="skill-row">
+        <div class="top"><span class="name">Segment Revenue &amp; Margin Forecasting</span><a class="tag excel" href="/files/Kucherova_Ekaterina_Siemens_FinancialAnalysis_2026.xlsx" title="Download workbook — FORECAST tab">Excel · FORECAST (Siemens)</a><a class="tag pbi" href="/siemens-mobility.html#dash-forecast">Power BI · Forecast page</a></div>
+        <div class="desc">Built a 12-month forecast from a company-disclosed backlog conversion target and margin guidance range, with seasonality weighting layered on top.</div>
+      </div>
+      <div class="skill-row">
+        <div class="top"><span class="name">Cost Center Variance &amp; Escalation Flagging</span><a class="tag excel" href="/files/Kucherova_Ekaterina_Siemens_FinancialAnalysis_2026.xlsx" title="Download workbook — ANALYSIS tab">Excel · ANALYSIS (Siemens)</a><a class="tag pbi" href="/siemens-mobility.html#dash-cost-control">Power BI · Cost Control page</a></div>
+        <div class="desc">Budget-vs-actual tracking across four cost centers with automatic Escalate / Monitor / On Track status thresholds.</div>
+      </div>
+      <div class="skill-row">
+        <div class="top"><span class="name">Source-Traceable Modeling from Public Filings</span><a class="tag excel" href="/files/Kucherova_Ekaterina_Siemens_FinancialAnalysis_2026.xlsx" title="Download workbook — SOURCES tab">Excel · SOURCES (Siemens)</a></div>
+        <div class="desc">Every headline figure cited to a specific Annual Report note or section, with self-derived assumptions explicitly flagged and kept separate from disclosed data.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Technical Exercises -->
+  <section id="exercises">
+    <div class="section-bar">Technical Exercises</div>
+    <div class="section-body">
+      <div class="headline-skill"><b>These are illustrative, not real-world.</b> Everything above is built on real transactions or real public filings. The entries below demonstrate correct technical mechanics on a constructed scenario — labeled as such, not presented as case studies.</div>
+      <div class="skill-row">
+        <div class="top"><span class="name">ASC 606 Revenue Recognition (5-Step Model)</span><a class="tag excel" href="/files/Kucherova_Ekaterina_ASC606_RevenueRecognition_Model.xlsx" title="Download workbook — REVENUE RECOGNITION SCHEDULE tab">Excel · REVENUE RECOGNITION SCHEDULE</a></div>
+        <div class="desc">Cost-to-cost percentage-of-completion method on an illustrative 18-month fixed-price contract. Walks all five ASC 606 steps, tracks contract asset/liability monthly, self-validates that billings sum to 100% and cumulative revenue reconciles to contract value.</div>
       </div>
     </div>
   </section>
