@@ -57,6 +57,16 @@
   header.hero h1{ font-size:36px; margin:0 0 12px; color:var(--navy); letter-spacing:-.2px; max-width:680px; }
   header.hero .sub{ color:var(--muted); font-size:16px; margin:0 0 8px; max-width:620px; }
   header.hero .role{ color:var(--navy); font-size:14px; font-weight:600; letter-spacing:.02em; text-transform:uppercase; margin-bottom:4px; }
+  header.hero .title-line{ color:var(--navy); font-size:16.5px; font-weight:600; margin:0 0 10px; }
+  .hero-cta{ display:flex; gap:12px; flex-wrap:wrap; margin-top:22px; }
+  .btn-primary, .btn-secondary{
+    display:inline-flex; align-items:center; gap:8px; text-decoration:none;
+    font-size:14px; font-weight:600; padding:12px 20px; border-radius:6px; transition:background .15s, border-color .15s;
+  }
+  .btn-primary{ background:var(--navy); color:#fff; }
+  .btn-primary:hover{ background:var(--navy-soft); }
+  .btn-secondary{ background:#fff; color:var(--navy); border:1px solid var(--line); }
+  .btn-secondary:hover{ border-color:var(--navy); }
 
   /* ---- sections ---- */
   main{ max-width:980px; margin:0 auto; padding:24px 24px 80px; }
@@ -105,24 +115,30 @@
   </div>
   <div class="links">
     <a href="/index.html" class="current">Home</a>
-    <a href="/claire-studio.html">Claire Studio</a>
-    <a href="/siemens-mobility.html">Siemens Mobility</a>
+    <a href="/index.html#projects">Projects</a>
     <a href="/Claire_Skills_Map.html">Skills Map</a>
+    <a href="/files/Kucherova_Financial_Analyst_Resume.pdf">Resume</a>
     <a href="/index.html#contact">Contact</a>
   </div>
 </nav>
 
 <header class="hero">
   <div class="formula-bar"><span class="fx">fx</span> =HOME("Kate Kucherova", portfolio:TRUE)</div>
-  <div class="role">CMA Candidate · Finance &amp; FP&amp;A</div>
+  <div class="role">CMA Candidate · Portfolio 2026</div>
   <h1>Portfolio work, built from real financial data.</h1>
-  <p class="sub">Accounting Analyst · Financial Analyst · Operations Finance. Each project below traces to a real source — an Excel model, a live Power BI dashboard, or both.</p>
+  <p class="title-line">Financial Analyst · Financial Data Analyst · Operations Finance</p>
+  <p class="sub">Finance professional with an MBA and full P&L ownership experience \u2014 founded and ran a small business's entire finance function across four revenue streams. Built a U.S.-standards project portfolio in ASC 606 revenue recognition, public-company FP&A analysis, and Power BI, in support of a return to U.S. finance work.</p>
+  <div class="hero-cta">
+    <a class="btn-primary" href="/files/Kucherova_Financial_Analyst_Resume.pdf" target="_blank" rel="noopener">View Resume (PDF)</a>
+    <a class="btn-secondary" href="/files/Kucherova_Financial_Analyst_Resume.docx" download>Download Word (.docx)</a>
+  </div>
 </header>
 
 <main>
 
   <section id="projects">
     <div class="section-label">Projects</div>
+    <p style="color:var(--muted); font-size:15px; margin:-6px 0 18px;">Each project below traces to a real source — an Excel model, a live Power BI dashboard, or both.</p>
     <div class="project-grid">
 
       <a class="project-card" href="/claire-studio.html">
